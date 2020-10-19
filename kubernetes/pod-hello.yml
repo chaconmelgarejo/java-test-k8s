@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myjavalabapp
+  labels:
+    app: helloworldjava
+spec:
+  containers:
+  - name: k8s-demo
+    image: cloudsultor/myjavalab:latest
+    ports:
+    - name: java-port
+      containerPort: 5000

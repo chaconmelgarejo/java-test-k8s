@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworldjava
+  namespace: labs
+  labels:
+    app: helloworldjava
+    tier: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: helloworldjava
+  template:
+    metadata:
+      labels:
+        app: helloworldjava
+    spec:
+      containers:
+      - name: helloworldjava
+        image: cloudsultor/myjavalab:latest
+        resources:
+            limits:
+              cpu: "100m"
+              memory: 256Mi
+            requests:
+              cpu: "50m"
+              memory: 128Mi
+        ports:
+         - name: java-port
+           containerPort: 5000
+        livenessProbe:
+          tcpSocket:
+            port: java-port
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: java-port
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      
